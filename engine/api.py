@@ -1,22 +1,38 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, Body
+from sqlalchemy.orm import Session
 import api_model
 import os
+from db_model import *
+from sqlalchemy import create_engine
+
 
 HOST = "127.0.0.1"
 PORT = 7777
 
 app = FastAPI()
 
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 @app.get("/hello/{name}")
 def read_root(name: str):
     return f"hello {name}"
 
-@app.post("/open-explorer/")
-def open_explorer(model: api_model.PathModel):
-    
-    os.startfile(model.path)
-
-    return f"Opening {model.path}"
+@app.post("/file_path/")
+def file_path(data  = Body(), db: Session = Depends(get_db)):
+    file = File(
+        name = data["name"],
+        path = data["path"]
+    )
+    db.add(file)
+    db.commit()
+    db.refresh(file)
+    print("added ", file)
+    return (file)
 
 if __name__ == "__main__":
     import asyncio

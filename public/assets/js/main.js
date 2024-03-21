@@ -25,7 +25,7 @@ if (isDev) {
     PythonShell
   } = require('python-shell')
 
-  PythonShell.run(API_DEV_PATH, function (err, results) {
+  PythonShell.run(API_DEV_PATH, '', function (err, results) {
     if (err) console.log(err)
   })
 } else {

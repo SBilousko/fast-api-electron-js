@@ -1,9 +1,10 @@
 from typing import Optional
 from pydantic import BaseModel
-from pydantic.schema import model_process_schema
+# from pydantic.schema import model_process_schema
 
-class PathModel(BaseModel):
-    path: str
+class FileModel(BaseModel):
+    name: str
+    path: Optional[str]
     message: Optional[str]
 
 class HelloModel(BaseModel):

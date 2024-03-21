@@ -20,10 +20,12 @@ function hello() {
 }
 
 function open_explorer() {
-  let path_to_open = inputPath.value
-  let endpoint = base_url + "open-explorer/"
+  let file_name = inputFileName.value
+  let file_path = inputFilePath.value
+  let endpoint = base_url + "file_path/"
   let req_data = {
-    path: path_to_open
+    name: file_name,
+    path: file_path
   }
 
   axios.post(endpoint, req_data, options)
