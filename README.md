@@ -1,3 +1,5 @@
+Original project you can find at https://github.com/gnoviawan/fast-api-electron-js
+
 ![Electron JS Python Fast API](https://raw.githubusercontent.com/gnoviawan/fast-api-electron-js/main/public/assets/media/logo/electron-fastapi.png)
 
 # Electron JS x Python Fast API

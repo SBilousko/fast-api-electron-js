@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, Body
+from fastapi import FastAPI, Depends, Body, HTTPException
 from sqlalchemy.orm import Session
 import api_model
 import os
@@ -18,21 +18,34 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/hello/{name}")
-def read_root(name: str):
-    return f"hello {name}"
+@app.get("/")
+def get_all_files(db: Session = Depends(get_db)):
+    return db.query(File).all()
 
 @app.post("/file_path/")
-def file_path(data  = Body(), db: Session = Depends(get_db)):
+def file_path(data = Body(), db: Session = Depends(get_db)):
     file = File(
         name = data["name"],
         path = data["path"]
     )
     db.add(file)
     db.commit()
-    db.refresh(file)
-    print("added ", file)
-    return (file)
+    return file["path"]
+
+@app.delete("/")
+def delete_files(db: Session = Depends(get_db)):
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(bind = engine)
+    
+    # files = db.query(File).all()
+    # for file in files:
+    #     file_to_delete = db.get(File, file["id"])
+    #     db.delete(file_to_delete)
+    #     db.commit()
+    # return {"ok": True}
+    
+    # db.execute('''DELETE FROM files''')
+    # db.commit()
 
 if __name__ == "__main__":
     import asyncio

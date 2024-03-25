@@ -6,7 +6,7 @@
   "scripts": {
     "py-install": "pip install -r requirements.txt",
     "py-build": "pyinstaller --workpath=engine/build --distpath=engine/dist api.spec",
-    "electron-dev": "electron .",
+    "dev": "electron .",
     "electron-build": "electron-builder --config electron-builder.config.json"
   },
   "repository": {
